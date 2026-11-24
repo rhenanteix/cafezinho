@@ -9,6 +9,9 @@ import { errorHandler, notFound } from "./middlewares/errorHandler";
 
 export const app = express();
 
+// The Next.js proxy forwards the visitor IP in X-Forwarded-For; trust it so rate limits are per visitor.
+app.set("trust proxy", process.env.TRUST_PROXY ?? "loopback");
+
 app.use(helmet({ crossOriginResourcePolicy: { policy: "cross-origin" } }));
 app.use(cors({ origin: env.corsOrigin }));
 app.use(express.json({ limit: "100kb" }));
