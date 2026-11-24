@@ -5,7 +5,7 @@ import { Plus, Trash2 } from "lucide-react";
 import Link from "next/link";
 import type { FieldErrors, PaymentLinkDraft } from "@/models/entities";
 import { LIMITS } from "@/models/entities";
-import { AMOUNT_PRESETS, formatBRL } from "@/models/payment";
+import { AMOUNT_PRESETS, formatBRL, parseBRL } from "@/models/payment";
 import { TextField } from "./Field";
 
 interface Props {
@@ -49,18 +49,16 @@ function AmountPicker({ value, onChange }: { value: number | null; onChange: (v:
         <div className="flex w-40 items-center rounded-xl bg-white ring-1 ring-black/10 focus-within:ring-2 focus-within:ring-brand-400">
           <span className="pl-3 text-sm text-mocha/60">R$</span>
           <input
-            type="number"
-            min={0.01}
-            step="0.01"
+            type="text"
             inputMode="decimal"
             aria-label="Valor personalizado"
-            defaultValue={value ? value / 100 : ""}
+            defaultValue={value ? String(value / 100).replace(".", ",") : ""}
             onChange={(e) => {
-              const reais = Number(e.target.value);
+              const reais = parseBRL(e.target.value);
               onChange(reais > 0 ? Math.round(reais * 100) : null);
             }}
             className="w-full bg-transparent px-2 py-2 text-sm outline-none"
-            placeholder="20"
+            placeholder="19,90"
           />
         </div>
       )}

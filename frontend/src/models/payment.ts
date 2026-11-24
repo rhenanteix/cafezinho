@@ -80,3 +80,10 @@ export function slugify(value: string) {
     .replace(/^-/, "")
     .slice(0, 30);
 }
+
+export function parseBRL(input: string) {
+  const clean = input.replace(/[^\d.,]/g, "");
+  const normalized = clean.includes(",") ? clean.replace(/\./g, "").replace(",", ".") : clean;
+  const value = Number(normalized);
+  return Number.isFinite(value) ? value : 0;
+}
