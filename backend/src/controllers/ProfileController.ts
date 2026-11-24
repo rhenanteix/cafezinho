@@ -2,7 +2,6 @@ import type { Request, Response } from "express";
 import { UserModel } from "../models/UserModel";
 import { CreatorView } from "../views/CreatorView";
 import { AppError } from "../utils/AppError";
-import { removeUploadedFile } from "../middlewares/upload";
 import type { UpdateProfileInput } from "../validators/creatorValidators";
 
 export const ProfileController = {
@@ -17,11 +16,7 @@ export const ProfileController = {
     if (data.slug && (await UserModel.isSlugTaken(data.slug, req.userId))) {
       throw new AppError("Este endereço já está em uso", 409, { slug: "Endereço já está em uso" });
     }
-    const previous = await UserModel.findById(req.userId!);
     const user = await UserModel.update(req.userId!, { ...data, ...socials }, paymentLinks);
-    if (data.avatarUrl !== undefined && previous?.avatarUrl !== user.avatarUrl) {
-      await removeUploadedFile(previous?.avatarUrl);
-    }
     res.json(CreatorView.private(user));
   },
 };

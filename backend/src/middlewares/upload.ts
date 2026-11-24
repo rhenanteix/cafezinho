@@ -43,12 +43,6 @@ export async function hasImageSignature(filePath: string) {
   }
 }
 
-export async function removeUploadedFile(url: string | null | undefined) {
-  const prefix = `${env.publicUrl}/uploads/`;
-  if (!url?.startsWith(prefix)) return;
-  await fs.promises.rm(path.join(env.uploadDir, path.basename(url)), { force: true }).catch(() => undefined);
-}
-
 export function publicFileUrl(filename: string) {
   return `${env.publicUrl}/uploads/${path.basename(filename)}`;
 }
