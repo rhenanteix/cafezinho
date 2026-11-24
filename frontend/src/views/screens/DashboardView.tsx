@@ -13,6 +13,7 @@ import { PaymentLinksEditor } from "../components/PaymentLinksEditor";
 import { PhoneFrame } from "../components/PhoneFrame";
 import { SlugField } from "../components/SlugField";
 import { SocialLinksEditor } from "../components/SocialLinksEditor";
+import { CountUp, Reveal } from "../components/motion";
 
 function Section({ title, description, children }: { title: string; description?: string; children: React.ReactNode }) {
   return (
@@ -76,16 +77,16 @@ export function DashboardView() {
         </div>
 
         <div className="mt-6 grid grid-cols-2 gap-4 sm:max-w-md">
-          <div className="rounded-2xl bg-white p-5 shadow-soft ring-1 ring-black/5">
-            <Eye className="size-5 text-brand-500" />
-            <p className="mt-3 text-3xl font-extrabold tabular-nums">{user.stats.views}</p>
-            <p className="text-sm text-mocha">visitas na página</p>
-          </div>
-          <div className="rounded-2xl bg-white p-5 shadow-soft ring-1 ring-black/5">
-            <MousePointerClick className="size-5 text-brand-500" />
-            <p className="mt-3 text-3xl font-extrabold tabular-nums">{user.stats.clicks}</p>
-            <p className="text-sm text-mocha">cliques em pagar</p>
-          </div>
+          <Reveal className="rounded-2xl bg-brand-gradient animate-gradient p-5 text-white shadow-glow">
+            <Eye className="size-5 text-zest-300" />
+            <CountUp value={user.stats.views} className="mt-3 block text-3xl font-extrabold tabular-nums" />
+            <p className="text-sm text-white/75">visitas na página</p>
+          </Reveal>
+          <Reveal delay={0.1} className="rounded-2xl bg-zest-300 p-5">
+            <MousePointerClick className="size-5 text-espresso" />
+            <CountUp value={user.stats.clicks} className="mt-3 block text-3xl font-extrabold tabular-nums" />
+            <p className="text-sm text-espresso/70">cliques em pagar</p>
+          </Reveal>
         </div>
 
         <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_380px]">
@@ -119,7 +120,7 @@ export function DashboardView() {
           <aside className="hidden lg:block">
             <div className="sticky top-8">
               <p className="mb-3 text-center text-xs font-bold uppercase tracking-widest text-mocha/60">Prévia</p>
-              <PhoneFrame url={`cafezinho.app/${form.slug}`}>
+              <PhoneFrame url={`paguemeucafezinho.com/${form.slug}`}>
                 <CreatorCard creator={vm.preview} preview />
               </PhoneFrame>
             </div>

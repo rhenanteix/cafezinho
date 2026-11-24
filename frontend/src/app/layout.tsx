@@ -5,7 +5,7 @@ import "./globals.css";
 const jakarta = Plus_Jakarta_Sans({ variable: "--font-jakarta", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: { default: "Cafezinho — receba apoio do seu público", template: "%s · Cafezinho" },
+  title: { default: "Pague meu Cafezinho — receba apoio do seu público", template: "%s · Pague meu Cafezinho" },
   description:
     "Crie sua página em minutos e receba apoio via PIX ou link de pagamento. O dinheiro vai direto para a sua conta.",
 };

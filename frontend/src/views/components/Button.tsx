@@ -6,9 +6,9 @@ type Variant = "primary" | "secondary" | "ghost" | "dark";
 type Size = "sm" | "md" | "lg";
 
 const variants: Record<Variant, string> = {
-  primary: "bg-brand-500 text-white hover:bg-brand-600 shadow-soft",
-  dark: "bg-espresso text-white hover:bg-black shadow-soft",
-  secondary: "bg-white text-espresso ring-1 ring-black/10 hover:ring-black/20 hover:bg-latte/40",
+  primary: "bg-brand-gradient animate-gradient text-white shadow-glow hover:-translate-y-0.5 hover:shadow-[0_14px_34px_-10px_rgb(124_92_255/0.8)]",
+  dark: "bg-espresso text-white hover:bg-black hover:-translate-y-0.5 shadow-soft",
+  secondary: "bg-white text-espresso ring-1 ring-black/10 hover:ring-brand-300 hover:-translate-y-0.5 hover:shadow-soft",
   ghost: "text-mocha hover:text-espresso hover:bg-black/5",
 };
 
@@ -27,7 +27,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export function Button({ variant = "primary", size = "md", loading, href, icon, className = "", children, disabled, ...rest }: Props) {
-  const classes = `inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-all duration-200 active:scale-[0.98] disabled:opacity-60 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-200 ${variants[variant]} ${sizes[size]} ${className}`;
+  const classes = `inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-all duration-200 active:scale-[0.97] disabled:opacity-60 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-200 ${variants[variant]} ${sizes[size]} ${className}`;
   const content = (
     <>
       {loading ? <LoaderCircle className="size-4 animate-spin" /> : icon}

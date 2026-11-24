@@ -57,7 +57,7 @@ const banks = [
       "Procure no app do seu banco por “Cobrar”, “Link de pagamento” ou “Pix Cobrança”",
       "Defina um valor ou deixe em aberto",
       "Gere o link e copie",
-      "Cole no Cafezinho — qualquer link https funciona",
+      "Cole no Pague meu Cafezinho — qualquer link https funciona",
     ],
   },
 ];
