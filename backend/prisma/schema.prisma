@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String        @id @default(cuid())
+  name         String
+  email        String        @unique
+  passwordHash String
+  slug         String        @unique
+  area         String
+  bio          String
+  avatarUrl    String?
+  heardFrom    String?
+  instagram    String?
+  youtube      String?
+  tiktok       String?
+  linkedin     String?
+  x            String?
+  facebook     String?
+  discord      String?
+  spotify      String?
+  website      String?
+  views        Int           @default(0)
+  paymentLinks PaymentLink[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model PaymentLink {
+  id          String   @id @default(cuid())
+  url         String
+  label       String
+  amountCents Int?
+  position    Int
+  clicks      Int      @default(0)
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+
+  @@index([userId])
+}
