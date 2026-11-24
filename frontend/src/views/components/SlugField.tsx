@@ -13,7 +13,7 @@ interface Props {
 }
 
 export function SlugField({ value, onChange, status, message, error }: Props) {
-  const host = typeof window !== "undefined" ? window.location.host : "cafezinho.app";
+  const host = typeof window !== "undefined" ? window.location.host : "paguemeucafezinho.com";
   const shownError = error ?? message;
   return (
     <FieldWrapper

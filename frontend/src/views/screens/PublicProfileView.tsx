@@ -39,8 +39,10 @@ export function PublicProfileView() {
   }
 
   return (
-    <main className="min-h-screen bg-[radial-gradient(ellipse_at_top,var(--color-brand-100),transparent_60%)] px-4 py-10">
-      <div className="mx-auto max-w-md animate-fade-up">
+    <main className="relative min-h-screen overflow-hidden bg-[radial-gradient(ellipse_at_top,var(--color-brand-100),transparent_60%)] px-4 py-10">
+      <div className="animate-blob pointer-events-none absolute -left-24 top-10 size-72 rounded-full bg-fuchsia-200/50 blur-3xl" />
+      <div className="animate-blob pointer-events-none absolute -right-24 bottom-10 size-72 rounded-full bg-zest-300/40 blur-3xl [animation-delay:-8s]" />
+      <div className="relative mx-auto max-w-md animate-fade-up">
         <div className="mb-4 flex justify-end">
           <button onClick={vm.share} className="inline-flex items-center gap-1.5 rounded-full bg-white/80 px-3.5 py-2 text-sm font-semibold text-mocha shadow-soft ring-1 ring-black/5 backdrop-blur hover:text-espresso">
             {vm.shared ? <Check className="size-4 text-emerald-600" /> : <Share2 className="size-4" />}
@@ -49,7 +51,7 @@ export function PublicProfileView() {
         </div>
         <CreatorCard creator={vm.creator} onLinkClick={vm.openLink} />
         <p className="mt-5 text-center text-xs text-mocha/70">
-          O pagamento é feito direto no banco de {vm.creator.name.split(" ")[0]}. O Cafezinho não cobra taxas.
+          O pagamento é feito direto no banco de {vm.creator.name.split(" ")[0]}. O Pague meu Cafezinho não cobra taxas.
         </p>
         <div className="mt-10 flex flex-col items-center gap-2">
           <Logo className="scale-90 opacity-80" />

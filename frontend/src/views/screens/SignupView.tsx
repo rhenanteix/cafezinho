@@ -14,6 +14,8 @@ import { PaymentLinksEditor } from "../components/PaymentLinksEditor";
 import { PhoneFrame } from "../components/PhoneFrame";
 import { SlugField } from "../components/SlugField";
 import { SocialLinksEditor } from "../components/SocialLinksEditor";
+import { motion } from "../components/motion";
+import { AnimatePresence } from "motion/react";
 
 export function SignupView() {
   const vm = useSignupViewModel();
@@ -21,7 +23,8 @@ export function SignupView() {
   const [showPreview, setShowPreview] = useState(false);
 
   return (
-    <div className="min-h-screen">
+    <div className="relative min-h-screen overflow-x-clip">
+      <div className="animate-blob pointer-events-none absolute -right-40 top-20 size-[480px] rounded-full bg-brand-200/50 blur-3xl" />
       <header className="border-b border-black/5 bg-white/60 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
           <Logo />
@@ -34,7 +37,7 @@ export function SignupView() {
         </div>
       </header>
 
-      <main className="mx-auto grid max-w-6xl gap-10 px-5 py-10 lg:grid-cols-[1fr_380px]">
+      <main className="relative mx-auto grid max-w-6xl gap-10 px-5 py-10 lg:grid-cols-[1fr_380px]">
         <div className="mx-auto w-full max-w-xl">
           <ol className="grid grid-cols-3 gap-2">
             {vm.steps.map((s, i) => {
@@ -43,9 +46,15 @@ export function SignupView() {
               return (
                 <li key={s.id}>
                   <button type="button" onClick={() => vm.goTo(i)} disabled={!done} className="w-full text-left">
-                    <div className={`h-1.5 rounded-full transition-colors ${done || current ? "bg-brand-500" : "bg-black/10"}`} />
+                    <div className="h-1.5 overflow-hidden rounded-full bg-black/10">
+                      <motion.div className="bg-brand-gradient h-full rounded-full" initial={false} animate={{ width: done || current ? "100%" : "0%" }} transition={{ duration: 0.5 }} />
+                    </div>
                     <div className="mt-2.5 flex items-center gap-1.5">
-                      {done && <Check className="size-3.5 text-brand-600" />}
+                      {done && (
+                        <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} className="grid size-4 place-items-center rounded-full bg-zest-400">
+                          <Check className="size-3 text-espresso" strokeWidth={3} />
+                        </motion.span>
+                      )}
                       <span className={`text-sm font-bold ${current ? "text-espresso" : "text-mocha/60"}`}>{s.title}</span>
                     </div>
                     <span className="hidden text-xs text-mocha/60 sm:block">{s.description}</span>
@@ -63,7 +72,8 @@ export function SignupView() {
               else vm.next();
             }}
           >
-            <div key={vm.step} className="animate-fade-up space-y-5">
+            <AnimatePresence mode="wait">
+            <motion.div key={vm.step} initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -24 }} transition={{ duration: 0.3 }} className="space-y-5">
               {vm.step === 0 && (
                 <>
                   <div>
@@ -103,7 +113,7 @@ export function SignupView() {
                   </div>
                   <SlugField value={form.slug} onChange={vm.setSlug} status={vm.slugCheck.status} message={vm.slugCheck.message} error={errors.slug} />
                   <PaymentLinksEditor links={form.paymentLinks} errors={errors} onUpdate={vm.updateLink} onAdd={vm.addLink} onRemove={vm.removeLink} />
-                  <TextField id="heardFrom" label="Como conheceu o Cafezinho?" optional value={form.heardFrom} maxLength={200} onChange={(e) => vm.setField("heardFrom", e.target.value)} />
+                  <TextField id="heardFrom" label="Como conheceu o Pague meu Cafezinho?" optional value={form.heardFrom} maxLength={200} onChange={(e) => vm.setField("heardFrom", e.target.value)} />
                   <label className={`flex cursor-pointer items-start gap-3 rounded-2xl bg-white p-4 text-sm ring-1 ${errors.acceptedTerms ? "ring-red-300" : "ring-black/10"}`}>
                     <input type="checkbox" checked={form.acceptedTerms} onChange={(e) => vm.setField("acceptedTerms", e.target.checked)} className="mt-0.5 size-4 accent-brand-500" />
                     <span>
@@ -115,7 +125,8 @@ export function SignupView() {
                   </label>
                 </>
               )}
-            </div>
+            </motion.div>
+            </AnimatePresence>
 
             {vm.formError && <p className="mt-6 rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-700">{vm.formError}</p>}
 
@@ -142,7 +153,7 @@ export function SignupView() {
         <aside className="hidden lg:block">
           <div className="sticky top-8">
             <p className="mb-3 text-center text-xs font-bold uppercase tracking-widest text-mocha/60">Prévia ao vivo</p>
-            <PhoneFrame url={`cafezinho.app/${form.slug || "seunome"}`}>
+            <PhoneFrame url={`paguemeucafezinho.com/${form.slug || "seunome"}`}>
               <CreatorCard creator={vm.preview} preview />
             </PhoneFrame>
           </div>
@@ -152,7 +163,7 @@ export function SignupView() {
       {showPreview && (
         <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 p-4 backdrop-blur-sm sm:items-center lg:hidden" onClick={() => setShowPreview(false)}>
           <div className="w-full max-w-sm animate-fade-up" onClick={(e) => e.stopPropagation()}>
-            <PhoneFrame url={`cafezinho.app/${form.slug || "seunome"}`}>
+            <PhoneFrame url={`paguemeucafezinho.com/${form.slug || "seunome"}`}>
               <CreatorCard creator={vm.preview} preview />
             </PhoneFrame>
             <Button variant="secondary" className="mt-4 w-full" onClick={() => setShowPreview(false)}>
