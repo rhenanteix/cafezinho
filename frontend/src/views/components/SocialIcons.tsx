@@ -17,7 +17,7 @@ export const SOCIAL_META: Record<SocialKey, { label: string; icon: ComponentType
 };
 
 function href(url: string) {
-  return /^https?:\/\//.test(url) ? url : `https://${url}`;
+  return /^https?:\/\//i.test(url) ? url : `https://${url}`;
 }
 
 export function SocialIcons({ socials, interactive = true }: { socials: Socials; interactive?: boolean }) {
