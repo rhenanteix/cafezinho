@@ -38,15 +38,14 @@ export const UserModel = {
   async update(id: string, data: Prisma.UserUpdateInput, links?: PaymentLinkInput[]) {
     return prisma.$transaction(async (tx) => {
       if (links) {
-        const existing = await tx.paymentLink.findMany({ where: { userId: id } });
+        const previous = await tx.paymentLink.findMany({ where: { userId: id }, orderBy: { position: "asc" } });
         await tx.paymentLink.deleteMany({ where: { userId: id } });
         await tx.paymentLink.createMany({
-          data: links.map((link, position) => ({
-            ...link,
-            position,
-            userId: id,
-            clicks: existing.find((e) => e.url === link.url)?.clicks ?? 0,
-          })),
+          data: links.map((link, position) => {
+            const match = previous.findIndex((p) => p.url === link.url);
+            const clicks = match >= 0 ? previous.splice(match, 1)[0].clicks : 0;
+            return { ...link, position, userId: id, clicks };
+          }),
         });
       }
       return tx.user.update({ where: { id }, data, include: withLinks });
