@@ -10,6 +10,8 @@ export function SiteFooter() {
           <Link href="/como-criar-link" className="hover:text-espresso">Guia de links</Link>
           <Link href="/cadastro" className="hover:text-espresso">Criar página</Link>
           <Link href="/entrar" className="hover:text-espresso">Entrar</Link>
+          <Link href="/termos" className="hover:text-espresso">Termos</Link>
+          <Link href="/privacidade" className="hover:text-espresso">Privacidade</Link>
         </nav>
         <p className="text-mocha/70">Feito com café no Brasil</p>
       </div>

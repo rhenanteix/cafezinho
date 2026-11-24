@@ -107,8 +107,9 @@ export function SignupView() {
                   <label className={`flex cursor-pointer items-start gap-3 rounded-2xl bg-white p-4 text-sm ring-1 ${errors.acceptedTerms ? "ring-red-300" : "ring-black/10"}`}>
                     <input type="checkbox" checked={form.acceptedTerms} onChange={(e) => vm.setField("acceptedTerms", e.target.checked)} className="mt-0.5 size-4 accent-brand-500" />
                     <span>
-                      Li e concordo com os <span className="font-semibold text-brand-600">Termos de Serviço</span> e a{" "}
-                      <span className="font-semibold text-brand-600">Política de Privacidade</span>.
+                      Li e concordo com os{" "}
+                      <Link href="/termos" target="_blank" className="font-semibold text-brand-600 hover:underline">Termos de Serviço</Link> e a{" "}
+                      <Link href="/privacidade" target="_blank" className="font-semibold text-brand-600 hover:underline">Política de Privacidade</Link>.
                       {errors.acceptedTerms && <span className="mt-1 block text-xs font-medium text-red-600">{errors.acceptedTerms}</span>}
                     </span>
                   </label>
