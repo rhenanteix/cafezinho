@@ -50,8 +50,8 @@ function AmountPicker({ value, onChange }: { value: number | null; onChange: (v:
           <span className="pl-3 text-sm text-mocha/60">R$</span>
           <input
             type="number"
-            min={1}
-            step="1"
+            min={0.01}
+            step="0.01"
             inputMode="decimal"
             aria-label="Valor personalizado"
             defaultValue={value ? value / 100 : ""}
