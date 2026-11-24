@@ -99,4 +99,11 @@ describe("Cafezinho API", () => {
     expect(res.status).toBe(201);
     expect(res.body.url).toMatch(/\/uploads\/.+\.png$/);
   });
+
+  it("rejects uploads whose content is not an image", async () => {
+    const res = await request(app)
+      .post("/api/uploads")
+      .attach("file", Buffer.from("<html><script>alert(1)</script></html>"), { filename: "a.png", contentType: "image/png" });
+    expect(res.status).toBe(415);
+  });
 });
